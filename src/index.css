@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --color-canvas: #F7F6F3;
+  --color-surface: #FFFFFF;
+  --color-line: #E5E3DD;
+  --color-ink: #181917;
+  --color-muted: #7A7A73;
+  --color-profit: #2E5E45;
+  --color-loss: #8A3A2E;
+
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+[data-theme="dark"] {
+  --color-canvas: #111213;
+  --color-surface: #1B1C1E;
+  --color-line: #2C2D2F;
+  --color-ink: #F2F1ED;
+  --color-muted: #96958E;
+  --color-profit: #6FCB94;
+  --color-loss: #E08B7C;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+}
+
+*,
+*::before,
+*::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, fill 0.25s ease, stroke 0.25s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none;
+  }
+}
+
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes word-glow {
+  0%, 100% { text-shadow: 0 0 10px rgb(111 203 148 / 0.35); }
+  50% { text-shadow: 0 0 18px rgb(111 203 148 / 0.6); }
+}
+
+.splash-word {
+  display: inline-block;
+  color: #6FCB94;
+  animation: word-in 0.5s ease both, word-glow 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .splash-word { animation: none; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+.shake {
+  animation: shake 0.4s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shake { animation: none; }
+}
+
+@keyframes drawline {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(.96) translateY(6px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-down {
+  animation: slideDown .25s ease;
+}
