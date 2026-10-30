@@ -1,5 +1,4 @@
 import { LogOut } from 'lucide-react'
-import Card from '../../components/ui/Card'
 import Button from '../../components/ui/Button'
 import ProfileHeader from './ProfileHeader'
 import PinSection from './PinSection'
@@ -25,14 +24,14 @@ export default function ProfilePage() {
           <ProfileHeader />
           <PinSection />
           <ThemeSwitch />
+        </div>
+
+        <div className="w-full md:flex-1 flex flex-col gap-4">
+          <InvestmentReport />
           <Button variant="secondary" onClick={() => signOut().catch(() => {})} className="w-full">
             <LogOut size={16} />
             Keluar
           </Button>
-        </div>
-
-        <div className="w-full md:flex-1">
-          <InvestmentReport />
         </div>
       </div>
     </div>
