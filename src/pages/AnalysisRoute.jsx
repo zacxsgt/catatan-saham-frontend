@@ -11,12 +11,12 @@ export default function AnalysisRoute() {
   const [selectedSymbol, setSelectedSymbol] = useState(null)
 
   const budget = Number(budgetRaw) || 0
-  const { affordable, isLoading } = useAffordableStocks(budget)
-  const { mutate: analyzeStock, data: result, isPending, error, reset } = useAnalyzeStock()
+  const { affordable, totalCached, isLoading, isError, error } = useAffordableStocks(budget)
+  const { mutate: analyzeStock, data: result, isPending, error: analyzeError, reset } = useAnalyzeStock()
 
   function handleSelect(symbol) {
     setSelectedSymbol(symbol)
-    reset() // bersihkan hasil analisis saham sebelumnya supaya tidak sempat terlihat sesaat
+    reset()
     analyzeStock({ symbol, budget })
   }
 
@@ -31,11 +31,19 @@ export default function AnalysisRoute() {
             <BudgetInput value={budgetRaw} onChange={setBudgetRaw} />
           </Card>
 
-          {budget > 0 && (
+          {budget > 0 && isLoading && (
+            <p className="text-sm text-muted py-6 text-center">Memuat harga saham...</p>
+          )}
+
+          {budget > 0 && isError && (
+            <p className="text-sm text-loss py-6 text-center">{error.message}</p>
+          )}
+
+          {budget > 0 && !isLoading && !isError && (
             <RecommendedStockList
               stocks={affordable}
               budget={budget}
-              isLoading={isLoading}
+              totalCached={totalCached}
               selectedSymbol={selectedSymbol}
               onSelect={handleSelect}
             />
@@ -46,7 +54,7 @@ export default function AnalysisRoute() {
           symbol={selectedSymbol}
           result={result}
           isPending={isPending}
-          error={error}
+          error={analyzeError}
         />
       </div>
     </div>
